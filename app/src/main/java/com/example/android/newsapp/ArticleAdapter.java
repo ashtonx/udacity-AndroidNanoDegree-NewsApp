@@ -15,8 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.android.newsapp.R.id.date;
-
 public class ArticleAdapter extends ArrayAdapter<Article>{
     private static final String LOG_TAG = ArticleAdapter.class.getSimpleName();
 
@@ -34,7 +32,9 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
             holder = new ViewHolder();
             holder.title=(TextView) convertView.findViewById(R.id.article_title);
             holder.sectionName=(TextView) convertView.findViewById(R.id.section);
-            holder.date=(TextView) convertView.findViewById(date);
+            holder.date=(TextView) convertView.findViewById(R.id.date);
+            holder.author=(TextView) convertView.findViewById(R.id.author);
+            holder.trailText=(TextView) convertView.findViewById(R.id.trail_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -52,9 +52,9 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
         }
         //todo options
         if (currArticle.getAuthor()!=null)
-            Log.e(LOG_TAG,"author not empty");
+            holder.author.setText(currArticle.getAuthor());
         if (currArticle.getTrailText()!=null)
-            Log.e(LOG_TAG,"trail not empty");
+            holder.trailText.setText(currArticle.getTrailText());
         if (currArticle.getThumbnailUrl()!=null)
             Log.e(LOG_TAG,"thumbnail not empty");
         return convertView;
@@ -64,6 +64,8 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
         TextView title;
         TextView sectionName;
         TextView date;
+        TextView trailText;
+        TextView author;
     }
 
     private String formatDate(Date dateObj){

@@ -20,4 +20,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="date"/>
+
+    <TextView
+        android:id="@+id/trail_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="trailtext"/>
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="author"/>
 </LinearLayout>

@@ -6,11 +6,11 @@ import android.content.Context;
 import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
-    private String mQuery;
+    private String mQueryUrl;
 
-    public ArticleLoader(Context context, String query){
+    public ArticleLoader(Context context, String queryUrl) {
         super(context);
-        mQuery=query;
+        mQueryUrl = queryUrl;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
     @Override
     public List<Article> loadInBackground() {
-        if(mQuery == null) return null;
-        return QueryUtils.fetchData(mQuery);
+        if (mQueryUrl == null) return null;
+        return QueryUtils.fetchData(mQueryUrl);
     }
 }

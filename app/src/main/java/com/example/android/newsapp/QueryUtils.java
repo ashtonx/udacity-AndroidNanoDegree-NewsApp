@@ -37,15 +37,8 @@ public final class QueryUtils {
 
     private static URL generateURL(String queryString) {
         URL url = null;
-
-        StringBuilder stringUrl = new StringBuilder();
-        stringUrl.append(QUERY_URL);
-        stringUrl.append(queryString);
-        stringUrl.append(ARG_API);
-        stringUrl.append(API_KEY);
-
         try {
-            url = new URL(stringUrl.toString());
+            url = new URL(queryString);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Error creating url", e);
         }
