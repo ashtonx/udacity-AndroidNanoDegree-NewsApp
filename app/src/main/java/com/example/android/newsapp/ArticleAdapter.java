@@ -16,11 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ArticleAdapter extends ArrayAdapter<Article>{
+public class ArticleAdapter extends ArrayAdapter<Article> {
     private static final String LOG_TAG = ArticleAdapter.class.getSimpleName();
 
-    ArticleAdapter(Context context, List<Article> articles){
-        super(context,0,articles);
+    ArticleAdapter(Context context, List<Article> articles) {
+        super(context, 0, articles);
     }
 
     @NonNull
@@ -28,15 +28,15 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
 
-        if (convertView==null){
-            convertView= LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
             holder = new ViewHolder();
-            holder.title=(TextView) convertView.findViewById(R.id.article_title);
-            holder.sectionName=(TextView) convertView.findViewById(R.id.section);
-            holder.date=(TextView) convertView.findViewById(R.id.date);
-            holder.author=(TextView) convertView.findViewById(R.id.author);
-            holder.trailText=(TextView) convertView.findViewById(R.id.trail_text);
-            holder.thumbnail=(ImageView) convertView.findViewById(R.id.thumbnail);
+            holder.title = (TextView) convertView.findViewById(R.id.article_title);
+            holder.sectionName = (TextView) convertView.findViewById(R.id.section);
+            holder.date = (TextView) convertView.findViewById(R.id.date);
+            holder.author = (TextView) convertView.findViewById(R.id.author);
+            holder.trailText = (TextView) convertView.findViewById(R.id.trail_text);
+            holder.thumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -48,16 +48,15 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
             holder.title.setText(currArticle.getTite());
         if (!currArticle.getSectionName().isEmpty())
             holder.sectionName.setText(currArticle.getSectionName());
-        if (!currArticle.getDate().isEmpty()){
+        if (!currArticle.getDate().isEmpty()) {
             Date parsedDate = parseDate(currArticle.getDate());
-            if (parsedDate!=null) holder.date.setText(formatDate(parsedDate));
+            if (parsedDate != null) holder.date.setText(formatDate(parsedDate));
         }
-        //todo options
         if (!currArticle.getAuthor().isEmpty())
             holder.author.setText(currArticle.getAuthor());
         if (!currArticle.getTrailText().isEmpty())
             holder.trailText.setText(currArticle.getTrailText());
-        if (currArticle.getThumbnailBitmap()!=null){
+        if (currArticle.getThumbnailBitmap() != null) {
             holder.thumbnail.setImageBitmap(currArticle.getThumbnailBitmap());
         }
         return convertView;
@@ -72,19 +71,19 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
         ImageView thumbnail;
     }
 
-    private String formatDate(Date dateObj){
+    private String formatDate(Date dateObj) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
         return dateFormat.format(dateObj);
     }
 
-    private Date parseDate(String strDate){
+    private Date parseDate(String strDate) {
         //in iso8601 date, out Date object
-        if (strDate==null) return null;
+        if (strDate == null) return null;
         SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         Date date = null;
         try {
             date = parser.parse(strDate);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             Log.e(LOG_TAG, "Error parsing date", e);
         }
         return date;

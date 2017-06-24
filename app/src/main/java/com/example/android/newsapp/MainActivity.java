@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +44,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView articleListView = (ListView) findViewById(R.id.list);
         articleListView.setEmptyView(mEmptyStateView);
         articleListView.setAdapter(mAdapter);
+        articleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+                        mAdapter.getItem(position).getWebUrl()
+                ));
+                if (browserIntent.resolveActivity(view.getContext().getPackageManager()) != null)
+                    view.getContext().startActivity(browserIntent);
+            }
+        });
 
         if (getIntent() != null) handleIntent(getIntent());
     }
@@ -84,10 +95,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final String ARG_API = "api-key";
         final String API_KEY = "test";
         final String ARG_SHOW_FIELDS = "show-fields";
-        final String ARG_FIELDS_BYLINE= "byline";
-        final String ARG_FIELDS_TRAILTEXT="trailText";
-        final String ARG_FIELDS_THUMBNAILS="thumbnail";
-        final String FIELDS_SEPARATOR=",";
+        final String ARG_FIELDS_BYLINE = "byline";
+        final String ARG_FIELDS_TRAILTEXT = "trailText";
+        final String ARG_FIELDS_THUMBNAILS = "thumbnail";
+        final String FIELDS_SEPARATOR = ",";
 
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -105,12 +116,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final boolean trailText = sharedPrefs.getBoolean(getString(R.string.settings_use_trailText_key), true);
         final boolean thumbnails = sharedPrefs.getBoolean(getString(R.string.settings_use_thumbnail_key), true);
         StringBuilder fieldsBuilder = new StringBuilder();
-        if(byline) fieldsBuilder.append(ARG_FIELDS_BYLINE+FIELDS_SEPARATOR);
-        if(trailText) fieldsBuilder.append(ARG_FIELDS_TRAILTEXT+FIELDS_SEPARATOR);
-        if(thumbnails) fieldsBuilder.append(ARG_FIELDS_THUMBNAILS+FIELDS_SEPARATOR);
-        fieldsBuilder.deleteCharAt(fieldsBuilder.length()-1); //seems simpler and less hassle than checking
-        if (fieldsBuilder.length()>0)
-            uriBuilder.appendQueryParameter(ARG_SHOW_FIELDS,fieldsBuilder.toString());
+        if (byline) fieldsBuilder.append(ARG_FIELDS_BYLINE + FIELDS_SEPARATOR);
+        if (trailText) fieldsBuilder.append(ARG_FIELDS_TRAILTEXT + FIELDS_SEPARATOR);
+        if (thumbnails) fieldsBuilder.append(ARG_FIELDS_THUMBNAILS + FIELDS_SEPARATOR);
+        fieldsBuilder.deleteCharAt(fieldsBuilder.length() - 1); //seems simpler and less hassle than checking
+        if (fieldsBuilder.length() > 0)
+            uriBuilder.appendQueryParameter(ARG_SHOW_FIELDS, fieldsBuilder.toString());
         Log.e("URIBUILDER:", uriBuilder.toString());
 
         uriBuilder.appendQueryParameter(ARG_API, API_KEY);
@@ -119,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return uriBuilder.toString();
 
     }
-
 
 
     //main menu

@@ -23,12 +23,6 @@ import java.util.List;
 
 public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
-    private static final String QUERY_URL = "http://content.guardianapis.com/search?q=";
-    private static final String ARG_API = "&api-key=";
-    private static final String API_KEY = "test";
-    private static final String ARG_ORDER = "&order-By=";//newset,oldest,relevance
-    private static final String ARG_SHOW_FIELDS = "&show-fields="; //byline - author, trailText = summary, thumbnail
-
     private static final int READ_TIMEOUT = 10000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String REQUEST_METHOD = "GET";
@@ -105,9 +99,9 @@ public final class QueryUtils {
     }
 
     private static Bitmap getBitmapFromUrl(String bitmapUrl) {
-        if (bitmapUrl==null) return null;
+        if (bitmapUrl == null) return null;
         Bitmap bitmap = null;
-        HttpURLConnection urlConnection=null;
+        HttpURLConnection urlConnection = null;
         InputStream iStream = null;
         try {
             URL url = generateURL(bitmapUrl);
@@ -116,19 +110,22 @@ public final class QueryUtils {
             urlConnection.setReadTimeout(READ_TIMEOUT);
             urlConnection.setRequestMethod(REQUEST_METHOD);
             urlConnection.connect();
-            if (urlConnection.getResponseCode()==200){
+            if (urlConnection.getResponseCode() == 200) {
                 iStream = urlConnection.getInputStream();
-                bitmap= BitmapFactory.decodeStream(iStream);
+                bitmap = BitmapFactory.decodeStream(iStream);
             } else {
-                Log.e(LOG_TAG, "Connection error, response code: "+urlConnection.getResponseCode());
+                Log.e(LOG_TAG, "Connection error, response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error getting bitmap", e);
         } finally {
             if (urlConnection != null) urlConnection.disconnect();
             if (iStream != null) {
-                try{iStream.close();}
-                catch (IOException e){Log.e(LOG_TAG,"Error closing input stream",e);}
+                try {
+                    iStream.close();
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Error closing input stream", e);
+                }
             }
         }
         return bitmap;

@@ -1,4 +1,3 @@
-
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:title="@string/settings_title">
 
@@ -10,18 +9,18 @@
         android:title="@string/settings_order_by_label"/>
 
     <SwitchPreference
+        android:defaultValue="true"
         android:key="@string/settings_use_byline_key"
-        android:title="@string/settings_use_byline_label"
-        android:defaultValue="true"/>
+        android:title="@string/settings_use_byline_label"/>
 
     <SwitchPreference
+        android:defaultValue="true"
         android:key="@string/settings_use_trailText_key"
-        android:title="@string/settings_use_trailText_label"
-        android:defaultValue="true"/>
+        android:title="@string/settings_use_trailText_label"/>
 
     <SwitchPreference
+        android:defaultValue="true"
         android:key="@string/settings_use_thumbnail_key"
-        android:title="@string/settings_use_thumbnail_label"
-        android:defaultValue="true"/>
+        android:title="@string/settings_use_thumbnail_label"/>
 
 </PreferenceScreen>

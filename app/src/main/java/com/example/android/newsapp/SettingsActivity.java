@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public class SettingsActivity extends AppCompatActivity{
+public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity{
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
-            //handle checkbox Preferences
+
             Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(orderBy);
         }
@@ -33,10 +33,10 @@ public class SettingsActivity extends AppCompatActivity{
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             if (preference instanceof CheckBoxPreference) return true;
             String stringValue = newValue.toString();
-            if (preference instanceof ListPreference){
+            if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;
                 int prefIndex = listPreference.findIndexOfValue(stringValue);
-                if (prefIndex >=0){
+                if (prefIndex >= 0) {
                     CharSequence[] labels = listPreference.getEntries();
                     preference.setSummary(labels[prefIndex]);
                 }
@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity{
             return true;
         }
 
-        private void bindPreferenceSummaryToValue(Preference preference){
+        private void bindPreferenceSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences =
                     PreferenceManager.getDefaultSharedPreferences(preference.getContext());

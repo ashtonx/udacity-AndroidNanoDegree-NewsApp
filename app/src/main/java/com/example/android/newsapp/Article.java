@@ -8,15 +8,15 @@ public class Article {
     private String mWebUrl;
     private String mSectionName;
     private String mDate;
-    private String mAuthor=null;
-    private String mTrailText=null;
-    private Bitmap mThumbnail=null;
+    private String mAuthor = null;
+    private String mTrailText = null;
+    private Bitmap mThumbnail = null;
 
     Article(String title, String webUrl, String sectionName, String date) {
         mTitle = title;
         mWebUrl = webUrl;
         mSectionName = sectionName;
-        mDate=date;
+        mDate = date;
     }
 
     public String getTite() {
@@ -43,7 +43,9 @@ public class Article {
         return mAuthor;
     }
 
-    public Bitmap getThumbnailBitmap() {return mThumbnail;}
+    public Bitmap getThumbnailBitmap() {
+        return mThumbnail;
+    }
 
     public void setAuthor(String author) {
         mAuthor = author;
