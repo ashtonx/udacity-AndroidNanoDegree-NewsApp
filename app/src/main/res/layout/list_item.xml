@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              style="@style/item_container">
 
-    <TextView
-        android:id="@+id/article_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Article Title"/>
-    <TextView
-        android:id="@+id/section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Section Name"/>
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="date"/>
+    <LinearLayout
+        style="@style/item_thumb_section_container">
 
-    <TextView
-        android:id="@+id/trail_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="trailtext"/>
+        <ImageView
+            android:id="@+id/thumbnail"
+            style="@style/item_thumbnail"
+            android:src="@drawable/logo"/>
 
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="author"/>
+        <TextView
+            android:id="@+id/section"
+            style="@style/item_section"
+            tools:text="Section Name"/>
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        style="@style/item_article_content_container">
+
+        <TextView
+            android:id="@+id/article_title"
+            style="@style/item_article_title"
+            tools:text="Article Title"/>
+
+        <TextView
+            android:id="@+id/trail_text"
+            style="@style/item_trail_text"
+            tools:text="trailText"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/item_content_container">
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/footer_text_style"
+            tools:text="date"/>
+
+        <TextView
+            android:id="@+id/author"
+            style="@style/footer_text_style"
+            tools:text="author"/>
+    </LinearLayout>
 </LinearLayout>

@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 
 public class Article {
 
-    private String mTitle;
-    private String mWebUrl;
-    private String mSectionName;
-    private String mDate;
-    private String mAuthor = null;
-    private String mTrailText = null;
+    private final String mTitle;
+    private final String mWebUrl;
+    private final String mSectionName;
+    private final String mDate;
+    private String mAuthor = "";
+    private String mTrailText = "";
     private Bitmap mThumbnail = null;
 
     Article(String title, String webUrl, String sectionName, String date) {
@@ -19,7 +19,7 @@ public class Article {
         mDate = date;
     }
 
-    public String getTite() {
+    public String getTitle() {
         return mTitle;
     }
 
@@ -39,20 +39,20 @@ public class Article {
         return mTrailText;
     }
 
-    public String getAuthor() {
-        return mAuthor;
+    public void setTrailText(String trailText) {
+        mTrailText = trailText;
     }
 
-    public Bitmap getThumbnailBitmap() {
-        return mThumbnail;
+    public String getAuthor() {
+        return mAuthor;
     }
 
     public void setAuthor(String author) {
         mAuthor = author;
     }
 
-    public void setTrailText(String trailText) {
-        mTrailText = trailText;
+    public Bitmap getThumbnailBitmap() {
+        return mThumbnail;
     }
 
     public void setThumbnailBitmap(Bitmap thumbnailBitmap) {

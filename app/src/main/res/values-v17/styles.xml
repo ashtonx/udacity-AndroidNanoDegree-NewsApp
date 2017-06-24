@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_content_container" parent="wrap_content">
+        <item name="android:layout_marginLeft">@dimen/padding_separator</item>
+        <item name="android:layout_marginStart">@dimen/padding_separator</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+</resources>

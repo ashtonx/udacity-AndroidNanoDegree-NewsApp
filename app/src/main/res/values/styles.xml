@@ -8,4 +8,78 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="fit_parent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="wrap_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="progress_bar" parent="wrap_content">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="item_container" parent="fit_parent">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/padding</item>
+    </style>
+
+    <style name="item_thumb_section_container">
+        <item name="android:layout_width">@dimen/thumbnail_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="item_thumbnail" parent="wrap_content">
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="text_style" parent="wrap_content">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="item_section" parent="text_style">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+    <style name="item_content_container" parent="wrap_content">
+        <item name="android:layout_marginLeft">@dimen/padding_separator</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="item_article_content_container" parent="item_content_container">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="item_article_title" parent="text_style">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textSize">@dimen/text_larger</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="item_trail_text" parent="text_style">
+        <item name="android:textColor">@color/textLighter</item>
+        <item name="android:maxLines">4</item>
+        <item name="android:textSize">@dimen/text_larger</item>
+    </style>
+
+    <style name="footer_text_style" parent="text_style">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
 </resources>

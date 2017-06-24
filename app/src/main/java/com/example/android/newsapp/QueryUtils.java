@@ -27,13 +27,14 @@ public final class QueryUtils {
     private static final int CONNECTION_TIMEOUT = 15000;
     private static final String REQUEST_METHOD = "GET";
     private static final String CHARSET_ENCODING = "UTF-8";
+    private static final String NULL_STRING = "";
 
     private QueryUtils() {
     }
 
     public static List<Article> fetchData(String queryUrl) {
         URL url = generateURL(queryUrl);
-        String jsonResponse = null;
+        String jsonResponse = NULL_STRING;
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
@@ -49,12 +50,11 @@ public final class QueryUtils {
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Error creating url", e);
         }
-
         return url;
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
-        String jsonResponse = "";
+        String jsonResponse = NULL_STRING;
 
         if (url == null) return jsonResponse;
 
@@ -98,13 +98,13 @@ public final class QueryUtils {
         return out.toString();
     }
 
-    private static Bitmap getBitmapFromUrl(String bitmapUrl) {
-        if (bitmapUrl == null) return null;
+    private static Bitmap getBitmapFromUrl(String bitmapUrlString) {
+        if (bitmapUrlString.isEmpty()) return null;
         Bitmap bitmap = null;
         HttpURLConnection urlConnection = null;
         InputStream iStream = null;
         try {
-            URL url = generateURL(bitmapUrl);
+            URL url = generateURL(bitmapUrlString);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
             urlConnection.setReadTimeout(READ_TIMEOUT);

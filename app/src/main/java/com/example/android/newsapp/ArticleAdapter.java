@@ -44,8 +44,8 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
         Article currArticle = getItem(position);
 
-        if (!currArticle.getTite().isEmpty())
-            holder.title.setText(currArticle.getTite());
+        if (!currArticle.getTitle().isEmpty())
+            holder.title.setText(currArticle.getTitle());
         if (!currArticle.getSectionName().isEmpty())
             holder.sectionName.setText(currArticle.getSectionName());
         if (!currArticle.getDate().isEmpty()) {
@@ -60,15 +60,6 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             holder.thumbnail.setImageBitmap(currArticle.getThumbnailBitmap());
         }
         return convertView;
-    }
-
-    private static class ViewHolder {
-        TextView title;
-        TextView sectionName;
-        TextView date;
-        TextView trailText;
-        TextView author;
-        ImageView thumbnail;
     }
 
     private String formatDate(Date dateObj) {
@@ -87,5 +78,14 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             Log.e(LOG_TAG, "Error parsing date", e);
         }
         return date;
+    }
+
+    private static class ViewHolder {
+        TextView title;
+        TextView sectionName;
+        TextView date;
+        TextView trailText;
+        TextView author;
+        ImageView thumbnail;
     }
 }

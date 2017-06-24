@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
-    private String mQueryUrl;
+    private final String mQueryUrl;
 
     public ArticleLoader(Context context, String queryUrl) {
         super(context);

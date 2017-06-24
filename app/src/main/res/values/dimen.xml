@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_separator">16dp</dimen>
+
+    <dimen name="thumbnail_size">120dp</dimen>
+    <dimen name="text_larger">16sp</dimen>
+    <dimen name="text_smaller">12sp</dimen>
+</resources>

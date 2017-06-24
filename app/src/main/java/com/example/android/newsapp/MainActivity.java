@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>> {
+    private static final int LOADER_ID = 1;
+    private static final String SEARCH_QUERY_KEY = "query";
     private TextView mEmptyStateView;
     private ArticleAdapter mAdapter;
-    private static final int LOADER_ID = 1;
     private ProgressBar mProgressBar;
-    private static final String SEARCH_QUERY_KEY = "query";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //helpers
     private void handleIntent(Intent intent) {
         final String queryAction = intent.getAction();
-        Log.e("intent: ", queryAction);
         if (Intent.ACTION_SEARCH.equals(queryAction)) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Bundle bundle = new Bundle();
@@ -100,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final String ARG_FIELDS_THUMBNAILS = "thumbnail";
         final String FIELDS_SEPARATOR = ",";
 
-
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String orderBy = sharedPrefs.getString(
                 getString(R.string.settings_order_by_key),
@@ -119,14 +116,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (byline) fieldsBuilder.append(ARG_FIELDS_BYLINE + FIELDS_SEPARATOR);
         if (trailText) fieldsBuilder.append(ARG_FIELDS_TRAILTEXT + FIELDS_SEPARATOR);
         if (thumbnails) fieldsBuilder.append(ARG_FIELDS_THUMBNAILS + FIELDS_SEPARATOR);
-        fieldsBuilder.deleteCharAt(fieldsBuilder.length() - 1); //seems simpler and less hassle than checking
-        if (fieldsBuilder.length() > 0)
+        if (fieldsBuilder.length() > 0) {
+            fieldsBuilder.deleteCharAt(fieldsBuilder.length() - 1);         //seems simpler and less hassle than checking
             uriBuilder.appendQueryParameter(ARG_SHOW_FIELDS, fieldsBuilder.toString());
-        Log.e("URIBUILDER:", uriBuilder.toString());
-
+        }
         uriBuilder.appendQueryParameter(ARG_API, API_KEY);
-
-
         return uriBuilder.toString();
 
     }
