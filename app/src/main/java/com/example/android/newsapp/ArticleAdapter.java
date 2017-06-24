@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -35,6 +36,7 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
             holder.date=(TextView) convertView.findViewById(R.id.date);
             holder.author=(TextView) convertView.findViewById(R.id.author);
             holder.trailText=(TextView) convertView.findViewById(R.id.trail_text);
+            holder.thumbnail=(ImageView) convertView.findViewById(R.id.thumbnail);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -42,21 +44,22 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
 
         Article currArticle = getItem(position);
 
-        if (currArticle.getTite()!=null)
+        if (!currArticle.getTite().isEmpty())
             holder.title.setText(currArticle.getTite());
-        if (currArticle.getSectionName()!=null)
+        if (!currArticle.getSectionName().isEmpty())
             holder.sectionName.setText(currArticle.getSectionName());
-        if (currArticle.getDate()!=null){
+        if (!currArticle.getDate().isEmpty()){
             Date parsedDate = parseDate(currArticle.getDate());
             if (parsedDate!=null) holder.date.setText(formatDate(parsedDate));
         }
         //todo options
-        if (currArticle.getAuthor()!=null)
+        if (!currArticle.getAuthor().isEmpty())
             holder.author.setText(currArticle.getAuthor());
-        if (currArticle.getTrailText()!=null)
+        if (!currArticle.getTrailText().isEmpty())
             holder.trailText.setText(currArticle.getTrailText());
-        if (currArticle.getThumbnailUrl()!=null)
-            Log.e(LOG_TAG,"thumbnail not empty");
+        if (currArticle.getThumbnailBitmap()!=null){
+            holder.thumbnail.setImageBitmap(currArticle.getThumbnailBitmap());
+        }
         return convertView;
     }
 
@@ -66,6 +69,7 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
         TextView date;
         TextView trailText;
         TextView author;
+        ImageView thumbnail;
     }
 
     private String formatDate(Date dateObj){
@@ -85,5 +89,4 @@ public class ArticleAdapter extends ArrayAdapter<Article>{
         }
         return date;
     }
-
 }

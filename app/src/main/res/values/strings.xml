@@ -5,7 +5,7 @@
     <string name="no_internet">No Internet Connection</string>
     <string name="no_results">No results</string>
 
-<!--SETTINGS-->
+    <!--SETTINGS-->
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">News App Settings</string>
 
@@ -20,7 +20,15 @@
     <string name="settings_order_by_oldest_value" translatable="false">oldest</string>
     <string name="settings_order_by_relevance_label">Relevance</string>
     <string name="settings_order_by_relevance_value" translatable="false">relevance</string>
+    <!--String for Show Author Preference-->
+    <string name="settings_use_byline_label">Display Author</string>
+    <string name="settings_use_byline_key" translatable="false">byline</string>
+    <!--String for Summary Preference-->
+    <string name="settings_use_trailText_label">Display Summary</string>
+    <string name="settings_use_trailText_key" translatable="false">trailText</string>
+    <!--String for Thumbnail Preference-->
+    <string name="settings_use_thumbnail_label">Display Thumbnails</string>
+    <string name="settings_use_thumbnail_key" translatable="false">thumbnail</string>
 
-    <!--String for Display Settings-->
 
 </resources>

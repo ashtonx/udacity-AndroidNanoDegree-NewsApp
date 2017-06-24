@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArticleAdapter mAdapter;
     private static final int LOADER_ID = 1;
     private ProgressBar mProgressBar;
-    private static final String QUERY_KEY = "query";
+    private static final String SEARCH_QUERY_KEY = "query";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (Intent.ACTION_SEARCH.equals(queryAction)) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Bundle bundle = new Bundle();
-            bundle.putString(QUERY_KEY, query);
+            bundle.putString(SEARCH_QUERY_KEY, query);
             lookupArticles(bundle);
         } else if (Intent.ACTION_MAIN.equals(queryAction)) {
             lookupArticles(null);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private String createUri(Bundle bundle) {
         String queryString;
-        if (bundle != null) queryString = bundle.getString(QUERY_KEY);
+        if (bundle != null) queryString = bundle.getString(SEARCH_QUERY_KEY);
         else queryString = "null";
 
         final String QUERY_URL = "http://content.guardianapis.com/search";
@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final String ARG_API = "api-key";
         final String API_KEY = "test";
         final String ARG_SHOW_FIELDS = "show-fields";
+        final String ARG_FIELDS_BYLINE= "byline";
+        final String ARG_FIELDS_TRAILTEXT="trailText";
+        final String ARG_FIELDS_THUMBNAILS="thumbnail";
+        final String FIELDS_SEPARATOR=",";
 
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -96,10 +100,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter(ARG_QUERY, queryString);
         uriBuilder.appendQueryParameter(ARG_ORDER, orderBy);
+
+        final boolean byline = sharedPrefs.getBoolean(getString(R.string.settings_use_byline_key), true);
+        final boolean trailText = sharedPrefs.getBoolean(getString(R.string.settings_use_trailText_key), true);
+        final boolean thumbnails = sharedPrefs.getBoolean(getString(R.string.settings_use_thumbnail_key), true);
+        StringBuilder fieldsBuilder = new StringBuilder();
+        if(byline) fieldsBuilder.append(ARG_FIELDS_BYLINE+FIELDS_SEPARATOR);
+        if(trailText) fieldsBuilder.append(ARG_FIELDS_TRAILTEXT+FIELDS_SEPARATOR);
+        if(thumbnails) fieldsBuilder.append(ARG_FIELDS_THUMBNAILS+FIELDS_SEPARATOR);
+        fieldsBuilder.deleteCharAt(fieldsBuilder.length()-1); //seems simpler and less hassle than checking
+        if (fieldsBuilder.length()>0)
+            uriBuilder.appendQueryParameter(ARG_SHOW_FIELDS,fieldsBuilder.toString());
+        Log.e("URIBUILDER:", uriBuilder.toString());
+
         uriBuilder.appendQueryParameter(ARG_API, API_KEY);
 
+
         return uriBuilder.toString();
+
     }
+
+
 
     //main menu
     @Override

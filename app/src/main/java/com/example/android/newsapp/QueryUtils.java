@@ -1,6 +1,8 @@
 package com.example.android.newsapp;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -35,17 +37,6 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-    private static URL generateURL(String queryString) {
-        URL url = null;
-        try {
-            url = new URL(queryString);
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error creating url", e);
-        }
-
-        return url;
-    }
-
     public static List<Article> fetchData(String queryUrl) {
         URL url = generateURL(queryUrl);
         String jsonResponse = null;
@@ -55,6 +46,17 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
         return parseJSON(jsonResponse);
+    }
+
+    private static URL generateURL(String queryString) {
+        URL url = null;
+        try {
+            url = new URL(queryString);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error creating url", e);
+        }
+
+        return url;
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
@@ -102,6 +104,36 @@ public final class QueryUtils {
         return out.toString();
     }
 
+    private static Bitmap getBitmapFromUrl(String bitmapUrl) {
+        if (bitmapUrl==null) return null;
+        Bitmap bitmap = null;
+        HttpURLConnection urlConnection=null;
+        InputStream iStream = null;
+        try {
+            URL url = generateURL(bitmapUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
+            urlConnection.setReadTimeout(READ_TIMEOUT);
+            urlConnection.setRequestMethod(REQUEST_METHOD);
+            urlConnection.connect();
+            if (urlConnection.getResponseCode()==200){
+                iStream = urlConnection.getInputStream();
+                bitmap= BitmapFactory.decodeStream(iStream);
+            } else {
+                Log.e(LOG_TAG, "Connection error, response code: "+urlConnection.getResponseCode());
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error getting bitmap", e);
+        } finally {
+            if (urlConnection != null) urlConnection.disconnect();
+            if (iStream != null) {
+                try{iStream.close();}
+                catch (IOException e){Log.e(LOG_TAG,"Error closing input stream",e);}
+            }
+        }
+        return bitmap;
+    }
+
     private static List<Article> parseJSON(String jsonString) {
         if (TextUtils.isEmpty(jsonString)) return null;
         List<Article> out = new ArrayList<>();
@@ -111,20 +143,18 @@ public final class QueryUtils {
             if (results == null) return null;
             for (int i = 0; i < results.length(); ++i) {
                 JSONObject currArticle = results.getJSONObject(i);
-                String title = currArticle.optString("webTitle");
-                String webUrl = currArticle.optString("webUrl");
-                String sectionName = currArticle.optString("sectionName");
-                String date = currArticle.optString("webPublicationDate");
-                //todo extra fields
+                final String title = currArticle.optString("webTitle");
+                final String webUrl = currArticle.optString("webUrl");
+                final String sectionName = currArticle.optString("sectionName");
+                final String date = currArticle.optString("webPublicationDate");
                 JSONObject fields = currArticle.optJSONObject("fields");
                 Article tmpArticle = new Article(title, webUrl, sectionName, date);
                 if (fields != null) {
                     tmpArticle.setTrailText(fields.optString("trailText"));
                     tmpArticle.setAuthor(fields.optString("byline"));
-                    tmpArticle.setThumbnailUrl(fields.optString("thumbnail"));
+                    tmpArticle.setThumbnailBitmap(getBitmapFromUrl(fields.optString("thumbnail")));
                 }
                 out.add(tmpArticle);
-
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "problem parsing json", e);

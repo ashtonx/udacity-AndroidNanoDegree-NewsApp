@@ -2,6 +2,7 @@ package com.example.android.newsapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -23,13 +24,14 @@ public class SettingsActivity extends AppCompatActivity{
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
-
+            //handle checkbox Preferences
             Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(orderBy);
         }
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            if (preference instanceof CheckBoxPreference) return true;
             String stringValue = newValue.toString();
             if (preference instanceof ListPreference){
                 ListPreference listPreference = (ListPreference) preference;
@@ -38,8 +40,7 @@ public class SettingsActivity extends AppCompatActivity{
                     CharSequence[] labels = listPreference.getEntries();
                     preference.setSummary(labels[prefIndex]);
                 }
-            } //else here
-
+            }
             return true;
         }
 

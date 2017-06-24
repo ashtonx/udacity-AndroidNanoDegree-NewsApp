@@ -1,5 +1,7 @@
 package com.example.android.newsapp;
 
+import android.graphics.Bitmap;
+
 public class Article {
 
     private String mTitle;
@@ -8,7 +10,7 @@ public class Article {
     private String mDate;
     private String mAuthor=null;
     private String mTrailText=null;
-    private String mThumbnailUrl=null;
+    private Bitmap mThumbnail=null;
 
     Article(String title, String webUrl, String sectionName, String date) {
         mTitle = title;
@@ -41,7 +43,7 @@ public class Article {
         return mAuthor;
     }
 
-    public String getThumbnailUrl() {return mThumbnailUrl;}
+    public Bitmap getThumbnailBitmap() {return mThumbnail;}
 
     public void setAuthor(String author) {
         mAuthor = author;
@@ -51,7 +53,7 @@ public class Article {
         mTrailText = trailText;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        mThumbnailUrl = thumbnailUrl;
+    public void setThumbnailBitmap(Bitmap thumbnailBitmap) {
+        mThumbnail = thumbnailBitmap;
     }
 }
